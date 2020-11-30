@@ -6,5 +6,5 @@ const schema = mongoose.Schema({
     skillId: {type:String,required:true}
 })
 
-module.exports = mongoose.model('BarberSkill',schema);
+module.exports = mongoose.model('BarberSkills',schema);
 

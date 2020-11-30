@@ -1,4 +1,3 @@
-const register = require('../../Auth/methods/register');
 const Stylist = require('../models/stylist');
 const Skill = require('../models/skill');
 const BarberSkill = require('../models/barberSkill');
@@ -6,8 +5,7 @@ const BarberAvailability = require('../models/availability');
 const CustomerAppointment = require('../models/appointment');
 
 var moment = require('moment');
-const { findByIdAndDelete, create } = require('../models/stylist');
-const { request } = require('express');
+
 
 async function Barber(req, res) {
     console.log(req.tableNo)
@@ -210,8 +208,8 @@ async function createAppointment(req, res,payload) {
 
 async function StylistAvailability(req, res) {
 
-    var a = moment('2020-11-02');
-    var b = moment('2020-11-30');
+    var a = moment('2020-11-30');
+    var b = moment('2020-12-30');
     var value = {
         interval: '00:30:00',
         startTime: '09:00:00',

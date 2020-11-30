@@ -3,14 +3,8 @@ var Schema = mongoose.Schema;
 
 
 const schema = mongoose.Schema({
-   
-    availability:[{
-        barberId:String,
-        startTime:Date,
-        endTime:Date,
-        Date:Date,
-        isAvailable:Boolean
-    }]
+        Name:{type:String},
+        isBarber:{type:Boolean,default:true},
 })
 
 

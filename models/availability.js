@@ -6,7 +6,7 @@ const schema = mongoose.Schema({
     startTime: {type:String,required:true},
     endTime: {type:String,required:true},
     date: {type:String,required:true},
-    isAvailable: {type:Boolean,required:true,default:false},
+    isAvailable: {type:Boolean,required:true,default:true},
 })
 
 module.exports = mongoose.model('StylistAvailability',schema);
