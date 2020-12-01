@@ -33,7 +33,6 @@ async function timeSlots(req, res) {
 }
 
 
-
 async function barberSkills(req, res) {
     BarberSkill.find({barberId:req.query.barberId}, function(err, barberSkills){
         if (err) {
@@ -47,8 +46,7 @@ async function barberSkills(req, res) {
        })
 
        console.log(skillIds);
-    
-
+       
         Skill.find({_id:{ $in: skillIds}}, function(err, skills){
             if (err) {
                 return res.send({ message: 'cant add barber skill' }).status(403);
