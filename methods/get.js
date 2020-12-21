@@ -4,6 +4,7 @@ const BarberSkill = require('../models/barberSkill');
 const BarberAvailability = require('../models/availability');
 const CustomerAppointment = require('../models/appointment');
 const skill = require('../models/skill');
+const workHours = require('../models/workHours');
 
 
 
@@ -30,6 +31,36 @@ async function timeSlots(req, res) {
                 return res.send({availability}).status(200);
             }       
     })
+}
+
+async function HoursOfWork(req,res){
+
+    workHours.find({barberId:req.query.barberId}, function(err, time){
+
+        if (err) {
+            return res.send({ message: 'Hours of work error' }).status(403);
+        }
+        else{
+            return res.send({time}).status(200);
+        }       
+})
+}
+
+
+async function appointments(req,res)
+{
+
+    CustomerAppointment.find({barberId:req.query.barberId}, function(err, bookings){
+
+        if (err) {
+            return res.send({ message: 'appointments of work error' }).status(403);
+        }
+        else{
+            return res.send({bookings}).status(200);
+        }       
+})
+
+
 }
 
 
@@ -64,5 +95,7 @@ async function barberSkills(req, res) {
 module.exports = {
     Barbers,
     barberSkills,
-    timeSlots
+    timeSlots,
+    HoursOfWork,
+    appointments
 }
