@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 const schema = mongoose.Schema({
     Name: {type:String,required:true},
     Price:{type:Number},
-    duration:{type:String}
+    Duration:{type:String}
 })
 
 

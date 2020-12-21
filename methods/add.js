@@ -43,8 +43,6 @@ async function editAppointment(req,res,payload)
         })
 
 
-
-
             Skill.findOne({ Name: req.body.skillName }, function (err, skill) {
                 if (!skill) return res.status(400).send({ msg: 'We were unable to find this skill.'})
 
@@ -329,7 +327,6 @@ async function BarberSkills(req, res) {
 }
 
 async function Skills(req, res) {
-    console.log(req.tableNo)
 
     skill = new Skill({
         Name: req.body.Name,

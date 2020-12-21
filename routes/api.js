@@ -235,7 +235,7 @@ router.post('/skill', async function (req, res, next) {
 
   if(response.status==200)
   {
-    add.skills(req,res);
+    add.Skills(req,res);
   }
   else
   {

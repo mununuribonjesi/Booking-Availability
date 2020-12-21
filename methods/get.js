@@ -20,7 +20,6 @@ async function Barbers(req, res) {
 }
 
 
-
 async function timeSlots(req, res) {
     BarberAvailability.find({barberId:req.query.barberId,isAvailable:true}, function(err, availability){
 
@@ -35,7 +34,7 @@ async function timeSlots(req, res) {
 
 async function HoursOfWork(req,res){
 
-    workHours.find({barberId:req.query.barberId}, function(err, time){
+    workHours.find({barberId:req.query.barberId,date:req.query.date}, function(err, time){
 
         if (err) {
             return res.send({ message: 'Hours of work error' }).status(403);
@@ -50,7 +49,7 @@ async function HoursOfWork(req,res){
 async function appointments(req,res)
 {
 
-    CustomerAppointment.find({barberId:req.query.barberId}, function(err, bookings){
+    CustomerAppointment.find({barberId:req.query.barberId,date:req.query.date}, function(err, bookings){
 
         if (err) {
             return res.send({ message: 'appointments of work error' }).status(403);
@@ -67,7 +66,7 @@ async function appointments(req,res)
 async function barberSkills(req, res) {
     BarberSkill.find({barberId:req.query.barberId}, function(err, barberSkills){
         if (err) {
-            return res.send({ message: 'cant add barber skill' }).status(403);
+            return res.send({ message: 'cant get barber skill' }).status(403);
         }
 
         var skillIds = []
@@ -86,7 +85,6 @@ async function barberSkills(req, res) {
                 return res.send({skills}).status(200);
             }
             })
-       
     })
 }
 
