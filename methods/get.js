@@ -19,6 +19,35 @@ async function Barbers(req, res) {
     })
 }
 
+async function skilledBarbers(req,res)
+{
+
+
+    BarberSkill.find({skillId:req.query.skillId}, function(err, barberSkills){
+        if (err) {
+            return res.send({ message: 'cant get barber skill' }).status(403);
+        }
+
+        var barberIds = []
+
+       Object.values(barberSkills).map((bs) => {
+            barberIds.push(bs.barberId)
+       })
+
+       console.log(barberIds);
+       
+       Stylist.find({_id:{ $in: barberIds}}, function(err, stylists){
+            if (err) {
+                return res.send({ message: 'cant add barber skill' }).status(403);
+            }
+            else{
+                return res.send({stylists}).status(200);
+            }
+            })
+    })
+
+}
+
 
 async function timeSlots(req, res) {
     BarberAvailability.find({barberId:req.query.barberId,isAvailable:true}, function(err, availability){
@@ -62,6 +91,21 @@ async function appointments(req,res)
 
 }
 
+async function skills(req,res)
+{
+
+    Skill.find({},function(err,skills){
+
+        if (err) {
+            return res.send({ message: 'cannot get skills' }).status(403);
+        }
+        else{
+            return res.send({skills}).status(200);
+        }
+        
+    })
+}
+
 
 async function barberSkills(req, res) {
     BarberSkill.find({barberId:req.query.barberId}, function(err, barberSkills){
@@ -95,5 +139,7 @@ module.exports = {
     barberSkills,
     timeSlots,
     HoursOfWork,
-    appointments
+    appointments,
+    skills,
+    skilledBarbers
 }

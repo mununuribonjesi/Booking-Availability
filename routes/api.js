@@ -97,6 +97,65 @@ router.get('/workHours', async function (req, res, next) {
 });
 
 
+router.get('/skilledBarbers', async function (req, res, next) {
+
+  if(!req.headers['authorization']) return res.sendStatus(403);
+
+  const authHeader = req.headers['authorization'];
+  const bearerToken = authHeader.split(' ');
+  const token = bearerToken[1];
+  const url = "http://localhost:3000/api/verification"
+
+  const response = await axios({
+    url:url,
+    method: 'Post',
+    headers:{
+      'Authorization':`Bearer ${token}`
+    }
+  })
+
+  if(response.status==200)
+  {
+    get.skilledBarbers(req,res);
+  }
+  else
+  {
+    return res.sendStatus(403)
+  }
+
+});
+
+
+
+router.get('/skills', async function (req, res, next) {
+
+  if(!req.headers['authorization']) return res.sendStatus(403);
+
+  const authHeader = req.headers['authorization'];
+  const bearerToken = authHeader.split(' ');
+  const token = bearerToken[1];
+  const url = "http://localhost:3000/api/verification"
+
+  const response = await axios({
+    url:url,
+    method: 'Post',
+    headers:{
+      'Authorization':`Bearer ${token}`
+    }
+  })
+
+  if(response.status==200)
+  {
+    get.skills(req,res);
+  }
+  else
+  {
+    return res.sendStatus(403)
+  }
+
+});
+
+
 router.get('/appointments', async function (req, res, next) {
 
   if(!req.headers['authorization']) return res.sendStatus(403);
