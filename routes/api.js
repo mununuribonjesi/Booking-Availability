@@ -37,6 +37,37 @@ router.post('/barber', async function (req, res, next) {
 });
 
 
+router.get('/customerAppointments', async function (req, res, next) {
+
+  //to do create function to return a response for reusability purposes
+
+  if(!req.headers['authorization']) return res.sendStatus(403);
+
+  const authHeader = req.headers['authorization'];
+  const bearerToken = authHeader.split(' ');
+  const token = bearerToken[1];
+  const url = "http://localhost:3000/api/verification"
+
+  const response = await axios({
+    url:url,
+    method: 'Post',
+    headers:{
+      'Authorization':`Bearer ${token}`
+    }
+  })
+
+  if(response.status==200)
+  {
+    get.customerAppointments(req,res);
+  }
+  else
+  {
+    return res.sendStatus(403)
+  }
+
+});
+
+
 router.post('/workHours', async function (req, res, next) {
 
   //to do create function to return a response for reusability purposes
