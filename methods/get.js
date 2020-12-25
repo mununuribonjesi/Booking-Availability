@@ -6,8 +6,7 @@ const CustomerAppointment = require('../models/appointment');
 const skill = require('../models/skill');
 const workHours = require('../models/workHours');
 const stylist = require('../models/stylist');
-
-
+const Moment = require('moment');
 
 
 
@@ -35,9 +34,6 @@ async function customerAppointments(req, res) {
 
     console.log(customerApp);
     return res.send({customerApp}).status(200);
-
-
-
    
 }
 
@@ -95,7 +91,7 @@ async function timeSlots(req, res) {
 
 async function HoursOfWork(req, res) {
 
-    workHours.find({ barberId: req.query.barberId, date: req.query.date }, function (err, time) {
+    workHours.find({ barberId: req.query.barberId, date: Moment(req.query.date)}, function (err, time) {
 
         if (err) {
             return res.send({ message: 'Hours of work error' }).status(403);
@@ -109,7 +105,7 @@ async function HoursOfWork(req, res) {
 
 async function appointments(req, res) {
 
-    CustomerAppointment.find({ barberId: req.query.barberId, date: req.query.date }, function (err, bookings) {
+    CustomerAppointment.find({ barberId: req.query.barberId, date: Moment(req.query.date)}, function (err, bookings) {
 
         if (err) {
             return res.send({ message: 'appointments of work error' }).status(403);

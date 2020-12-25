@@ -4,6 +4,7 @@ const BarberSkill = require('../models/barberSkill');
 const BarberAvailability = require('../models/availability');
 const CustomerAppointment = require('../models/appointment');
 const WorkHours = require('../models/workHours')
+const Moment = require('moment');
 
 var moment = require('moment');
 
@@ -133,11 +134,6 @@ async function deleteAppointment(req,res)
 
 async function createAppointment(req, res,payload) {
 
-     console.log(req.body.startTime);
-     console.log(req.body.endTime);
-     console.log(req.body.date);
-
-
     Stylist.findOne({ Name: req.body.name }, function (err, stylist) {
 
         if (stylist)
@@ -155,9 +151,9 @@ async function createAppointment(req, res,payload) {
             customerAppointment = new CustomerAppointment
             ({
                 barberId: stylist._id,
-                startTime: req.body.startTime,
-                endTime:req.body.endTime,
-                date:req.body.date,
+                startTime:Moment(req.body.date+'T'+req.body.startTime),
+                endTime:Moment(req.body.date+'T'+req.body.endTime),
+                date:Moment(req.body.date),
                 skillId: skill._id,
                 customerId: payload._id,
             })
@@ -191,9 +187,9 @@ async function HoursOfWork(req,res)
 
     workHours = new WorkHours({
         barberId: stylist._id,
-        startTime: req.body.startTime,
-        endTime: req.body.endTime,
-        date: req.body.date,
+        startTime:Moment(req.body.date+'T'+req.body.startTime),
+        endTime:Moment(req.body.date+'T'+req.body.endTime),
+        date:Moment(req.body.date),
     })
 
 
