@@ -2,30 +2,16 @@ const express = require('express');
 const router = express.Router();
 const add = require('../methods/add');
 const get = require('../methods/get');
-const axios = require('axios');
-
+const security = require('../methods/Authorization')
 
 
 router.post('/barber', async function (req, res, next) {
 
-  //to do create function to return a response for reusability purposes
-
   if(!req.headers['authorization']) return res.sendStatus(403);
 
-  const authHeader = req.headers['authorization'];
-  const bearerToken = authHeader.split(' ');
-  const token = bearerToken[1];
-  const url = "http://localhost:3000/api/verification"
+  const Auth = await security.Authorization(req);
 
-  const response = await axios({
-    url:url,
-    method: 'Post',
-    headers:{
-      'Authorization':`Bearer ${token}`
-    }
-  })
-
-  if(response.status==200)
+  if(Auth.status==200)
   {
     add.Barber(req,res);
   }
@@ -39,24 +25,11 @@ router.post('/barber', async function (req, res, next) {
 
 router.get('/customerAppointments', async function (req, res, next) {
 
-  //to do create function to return a response for reusability purposes
-
   if(!req.headers['authorization']) return res.sendStatus(403);
 
-  const authHeader = req.headers['authorization'];
-  const bearerToken = authHeader.split(' ');
-  const token = bearerToken[1];
-  const url = "http://localhost:3000/api/verification"
+  const Auth = await security.Authorization(req);
 
-  const response = await axios({
-    url:url,
-    method: 'Post',
-    headers:{
-      'Authorization':`Bearer ${token}`
-    }
-  })
-
-  if(response.status==200)
+  if(Auth.status==200)
   {
     get.customerAppointments(req,res);
   }
@@ -70,24 +43,11 @@ router.get('/customerAppointments', async function (req, res, next) {
 
 router.post('/workHours', async function (req, res, next) {
 
-  //to do create function to return a response for reusability purposes
-
   if(!req.headers['authorization']) return res.sendStatus(403);
 
-  const authHeader = req.headers['authorization'];
-  const bearerToken = authHeader.split(' ');
-  const token = bearerToken[1];
-  const url = "http://localhost:3000/api/verification"
+  const Auth = await security.Authorization(req);
 
-  const response = await axios({
-    url:url,
-    method: 'Post',
-    headers:{
-      'Authorization':`Bearer ${token}`
-    }
-  })
-
-  if(response.status==200)
+  if(Auth.status==200)
   {
     add.HoursOfWork(req,res);
   }
@@ -103,20 +63,9 @@ router.get('/workHours', async function (req, res, next) {
 
   if(!req.headers['authorization']) return res.sendStatus(403);
 
-  const authHeader = req.headers['authorization'];
-  const bearerToken = authHeader.split(' ');
-  const token = bearerToken[1];
-  const url = "http://localhost:3000/api/verification"
+  const Auth = await security.Authorization(req);
 
-  const response = await axios({
-    url:url,
-    method: 'Post',
-    headers:{
-      'Authorization':`Bearer ${token}`
-    }
-  })
-
-  if(response.status==200)
+  if(Auth.status==200)
   {
     get.HoursOfWork(req,res);
   }
@@ -132,20 +81,9 @@ router.get('/skilledBarbers', async function (req, res, next) {
 
   if(!req.headers['authorization']) return res.sendStatus(403);
 
-  const authHeader = req.headers['authorization'];
-  const bearerToken = authHeader.split(' ');
-  const token = bearerToken[1];
-  const url = "http://localhost:3000/api/verification"
+  const Auth = await security.Authorization(req);
 
-  const response = await axios({
-    url:url,
-    method: 'Post',
-    headers:{
-      'Authorization':`Bearer ${token}`
-    }
-  })
-
-  if(response.status==200)
+  if(Auth.status==200)
   {
     get.skilledBarbers(req,res);
   }
@@ -162,20 +100,9 @@ router.get('/skills', async function (req, res, next) {
 
   if(!req.headers['authorization']) return res.sendStatus(403);
 
-  const authHeader = req.headers['authorization'];
-  const bearerToken = authHeader.split(' ');
-  const token = bearerToken[1];
-  const url = "http://localhost:3000/api/verification"
+  const Auth = await security.Authorization(req);
 
-  const response = await axios({
-    url:url,
-    method: 'Post',
-    headers:{
-      'Authorization':`Bearer ${token}`
-    }
-  })
-
-  if(response.status==200)
+  if(Auth.status==200)
   {
     get.skills(req,res);
   }
@@ -189,22 +116,12 @@ router.get('/skills', async function (req, res, next) {
 
 router.get('/appointments', async function (req, res, next) {
 
+  
   if(!req.headers['authorization']) return res.sendStatus(403);
 
-  const authHeader = req.headers['authorization'];
-  const bearerToken = authHeader.split(' ');
-  const token = bearerToken[1];
-  const url = "http://localhost:3000/api/verification"
+  const Auth = await security.Authorization(req);
 
-  const response = await axios({
-    url:url,
-    method: 'Post',
-    headers:{
-      'Authorization':`Bearer ${token}`
-    }
-  })
-
-  if(response.status==200)
+  if(Auth.status==200)
   {
     get.appointments(req,res);
   }
@@ -218,23 +135,12 @@ router.get('/appointments', async function (req, res, next) {
 
 
 router.get('/timeSlots', async function (req, res, next) {
-
+ 
   if(!req.headers['authorization']) return res.sendStatus(403);
 
-  const authHeader = req.headers['authorization'];
-  const bearerToken = authHeader.split(' ');
-  const token = bearerToken[1];
-  const url = "http://localhost:3000/api/verification"
+  const Auth = await security.Authorization(req);
 
-  const response = await axios({
-    url:url,
-    method: 'Post',
-    headers:{
-      'Authorization':`Bearer ${token}`
-    }
-  })
-
-  if(response.status==200)
+  if(Auth.status==200)
   {
     get.timeSlots(req,res);
   }
@@ -250,20 +156,9 @@ router.get('/barberSkills', async function (req, res, next) {
 
   if(!req.headers['authorization']) return res.sendStatus(403);
 
-  const authHeader = req.headers['authorization'];
-  const bearerToken = authHeader.split(' ');
-  const token = bearerToken[1];
-  const url = "http://localhost:3000/api/verification"
+  const Auth = await security.Authorization(req);
 
-  const response = await axios({
-    url:url,
-    method: 'Post',
-    headers:{
-      'Authorization':`Bearer ${token}`
-    }
-  })
-
-  if(response.status==200)
+  if(Auth.status==200)
   {
     get.barberSkills(req,res);
   }
@@ -278,22 +173,15 @@ router.get('/barberSkills', async function (req, res, next) {
 
 router.get('/barbers', async function (req, res, next) {
 
+
   if(!req.headers['authorization']) return res.sendStatus(403);
 
-  const authHeader = req.headers['authorization'];
-  const bearerToken = authHeader.split(' ');
-  const token = bearerToken[1];
-  const url = "http://localhost:3000/api/verification"
+  const Auth = await security.Authorization(req);
 
-  const response = await axios({
-    url:url,
-    method: 'Post',
-    headers:{
-      'Authorization':`Bearer ${token}`
-    }
-  })
+  console.log(Auth)
 
-  if(response.status==200)
+
+  if(Auth.status==200)
   {
     get.Barbers(req,res);
   }
@@ -310,20 +198,9 @@ router.post('/skill', async function (req, res, next) {
 
   if(!req.headers['authorization']) return res.sendStatus(403);
 
-  const authHeader = req.headers['authorization'];
-  const bearerToken = authHeader.split(' ');
-  const token = bearerToken[1];
-  const url = "http://localhost:3000/api/verification"
+  const Auth = await security.Authorization(req);
 
-  const response = await axios({
-    url:url,
-    method: 'Post',
-    headers:{
-      'Authorization':`Bearer ${token}`
-    }
-  })
-
-  if(response.status==200)
+  if(Auth.status==200)
   {
     add.Skills(req,res);
   }
@@ -336,22 +213,12 @@ router.post('/skill', async function (req, res, next) {
 
 router.post('/barberSkill', async function (req, res, next) {
 
+
   if(!req.headers['authorization']) return res.sendStatus(403);
 
-  const authHeader = req.headers['authorization'];
-  const bearerToken = authHeader.split(' ');
-  const token = bearerToken[1];
-  const url = "http://localhost:3000/api/verification"
+  const Auth = await security.Authorization(req);
 
-  const response = await axios({
-    url:url,
-    method: 'Post',
-    headers:{
-      'Authorization':`Bearer ${token}`
-    }
-  })
-
-  if(response.status==200)
+  if(Auth.status==200)
   {
     add.BarberSkills(req,res);
   }
@@ -367,22 +234,9 @@ router.post('/availability', async function (req, res, next) {
 
   if(!req.headers['authorization']) return res.sendStatus(403);
 
-  const authHeader = req.headers['authorization'];
-  const bearerToken = authHeader.split(' ');
-  const token = bearerToken[1];
-  const url = "http://localhost:3000/api/verification"
+  const Auth = await security.Authorization(req);
 
-  const response = await axios({
-    url:url,
-    method: 'Post',
-    headers:{
-      'Authorization':`Bearer ${token}`
-    }
-  })
-
-  console.log(response.data);
-
-  if(response.status==200)
+  if(Auth.status==200)
   {
     add.StylistAvailability(req,res);
   }
@@ -398,20 +252,9 @@ router.post('/appointment', async function (req, res, next) {
 
   if(!req.headers['authorization']) return res.sendStatus(403);
 
-  const authHeader = req.headers['authorization'];
-  const bearerToken = authHeader.split(' ');
-  const token = bearerToken[1];
-  const url = "http://localhost:3000/api/verification"
+  const Auth = await security.Authorization(req);
 
-  const response = await axios({
-    url:url,
-    method: 'Post',
-    headers:{
-      'Authorization':`Bearer ${token}`
-    }
-  })
-
-  if(response.status==200)
+  if(Auth.status==200)
   {
     add.createAppointment(req,res,response.data.payload);
   }
@@ -427,20 +270,9 @@ router.post('/appointment/delete', async function (req, res, next) {
 
   if(!req.headers['authorization']) return res.sendStatus(403);
 
-  const authHeader = req.headers['authorization'];
-  const bearerToken = authHeader.split(' ');
-  const token = bearerToken[1];
-  const url = "http://localhost:3000/api/verification"
+  const Auth = await security.Authorization(req);
 
-  const response = await axios({
-    url:url,
-    method: 'Post',
-    headers:{
-      'Authorization':`Bearer ${token}`
-    }
-  })
-
-  if(response.status==200)
+  if(Auth.status==200)
   {
     add.deleteAppointment(req,res);
   }
@@ -456,20 +288,9 @@ router.post('/appointment/edit', async function (req, res, next) {
 
   if(!req.headers['authorization']) return res.sendStatus(403);
 
-  const authHeader = req.headers['authorization'];
-  const bearerToken = authHeader.split(' ');
-  const token = bearerToken[1];
-  const url = "http://localhost:3000/api/verification"
+  const Auth = await security.Authorization(req);
 
-  const response = await axios({
-    url:url,
-    method: 'Post',
-    headers:{
-      'Authorization':`Bearer ${token}`
-    }
-  })
-
-  if(response.status==200)
+  if(Auth.status==200)
   {
     add.editAppointment(req,res,response.data.payload);
   }
