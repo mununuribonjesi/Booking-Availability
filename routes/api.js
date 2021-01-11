@@ -256,7 +256,7 @@ router.post('/appointment', async function (req, res, next) {
 
   if(Auth.status==200)
   {
-    add.createAppointment(req,res,response.data.payload);
+    add.createAppointment(req,res,Auth.data.payload);
   }
   else
   {
