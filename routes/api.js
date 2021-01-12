@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const add = require('../methods/add');
 const get = require('../methods/get');
+const remove = require('../methods/delete');
 const security = require('../methods/Authorization')
 
 
@@ -300,6 +301,26 @@ router.post('/appointment/edit', async function (req, res, next) {
   }
 
 });
+
+
+
+router.delete('/appointment', async function (req, res, next) {
+
+  if(!req.headers['authorization']) return res.sendStatus(403);
+
+  const Auth = await security.Authorization(req);
+
+  if(Auth.status==200)
+  {
+    remove.appointment(req,res);
+  }
+  else
+  {
+    return res.sendStatus(403)
+  }
+
+});
+
   
   
 
