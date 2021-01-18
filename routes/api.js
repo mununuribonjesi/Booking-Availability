@@ -166,9 +166,6 @@ router.get('/barbers', async function (req, res, next) {
 
   const Auth = await security.Authorization(req);
 
-  console.log(Auth)
-
-
   if(Auth.status==200)
   {
     get.Barbers(req,res);

@@ -45,11 +45,14 @@ async function company(req, res) {
 }
 
 async function Barbers(req, res) {
-    Stylist.find({organisationId:organisationId}, function (err, stylists) {
+    Stylist.find({organisationId: req.query.organisationId}, function (err, stylists) {
+
+        console.log(req.query.organisationId);
         if (err) {
             return res.send({ message: 'cant add barber skill' }).status(403);
         }
         else {
+            console.log(stylists);
             return res.send({ stylists }).status(200);
         }
     })
