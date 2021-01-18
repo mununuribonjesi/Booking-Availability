@@ -8,6 +8,7 @@ const schema = mongoose.Schema({
     endTime: {type:Date,required:true},
     date: {type:Date,required:true},
     customerId: {type:String,required:true},
+    orgranisationId:{type:String,required:true}
 })
 
 module.exports = mongoose.model('CustomerAppointment',schema);

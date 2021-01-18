@@ -1,10 +1,11 @@
+"use strict"
+
 const express = require('express');
 const router = express.Router();
 const add = require('../methods/add');
 const get = require('../methods/get');
 const remove = require('../methods/delete');
 const security = require('../methods/Authorization')
-
 
 router.post('/barber', async function (req, res, next) {
 
@@ -23,7 +24,6 @@ router.post('/barber', async function (req, res, next) {
 
 });
 
-
 router.get('/customerAppointments', async function (req, res, next) {
 
   if(!req.headers['authorization']) return res.sendStatus(403);
@@ -40,7 +40,6 @@ router.get('/customerAppointments', async function (req, res, next) {
   }
 
 });
-
 
 router.post('/workHours', async function (req, res, next) {
 
@@ -59,7 +58,6 @@ router.post('/workHours', async function (req, res, next) {
 
 });
 
-
 router.get('/workHours', async function (req, res, next) {
 
   if(!req.headers['authorization']) return res.sendStatus(403);
@@ -76,7 +74,6 @@ router.get('/workHours', async function (req, res, next) {
   }
 
 });
-
 
 router.get('/skilledBarbers', async function (req, res, next) {
 
@@ -95,8 +92,6 @@ router.get('/skilledBarbers', async function (req, res, next) {
 
 });
 
-
-
 router.get('/skills', async function (req, res, next) {
 
   if(!req.headers['authorization']) return res.sendStatus(403);
@@ -111,13 +106,10 @@ router.get('/skills', async function (req, res, next) {
   {
     return res.sendStatus(403)
   }
-
 });
-
 
 router.get('/appointments', async function (req, res, next) {
 
-  
   if(!req.headers['authorization']) return res.sendStatus(403);
 
   const Auth = await security.Authorization(req);
@@ -132,8 +124,6 @@ router.get('/appointments', async function (req, res, next) {
   }
 
 });
-
-
 
 router.get('/timeSlots', async function (req, res, next) {
  
@@ -152,7 +142,6 @@ router.get('/timeSlots', async function (req, res, next) {
 
 });
 
-
 router.get('/barberSkills', async function (req, res, next) {
 
   if(!req.headers['authorization']) return res.sendStatus(403);
@@ -169,8 +158,6 @@ router.get('/barberSkills', async function (req, res, next) {
   }
 
 });
-
-
 
 router.get('/barbers', async function (req, res, next) {
 
@@ -192,8 +179,6 @@ router.get('/barbers', async function (req, res, next) {
   }
 
 });
-
-
 
 router.post('/skill', async function (req, res, next) {
 
@@ -266,6 +251,30 @@ router.post('/appointment', async function (req, res, next) {
 
 });
 
+router.post('/organisation', async function (req, res, next) {
+
+  //if(!req.headers['authorization']) return res.sendStatus(403);
+
+  //const Auth = await security.Authorization(req);
+
+ 
+    add.registerOrganisation(req,res);
+
+
+});
+
+
+router.get('/organisation', async function (req, res, next) {
+
+  //if(!req.headers['authorization']) return res.sendStatus(403);
+  //const Auth = await security.Authorization(req);
+
+
+    get.company(req,res);
+
+
+});
+
 
 router.post('/appointment/delete', async function (req, res, next) {
 
@@ -283,25 +292,6 @@ router.post('/appointment/delete', async function (req, res, next) {
   }
 
 });
-
-
-router.post('/appointment/edit', async function (req, res, next) {
-
-  if(!req.headers['authorization']) return res.sendStatus(403);
-
-  const Auth = await security.Authorization(req);
-
-  if(Auth.status==200)
-  {
-    add.editAppointment(req,res,response.data.payload);
-  }
-  else
-  {
-    return res.sendStatus(403)
-  }
-
-});
-
 
 
 router.delete('/appointment', async function (req, res, next) {

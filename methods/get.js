@@ -1,3 +1,5 @@
+"use strict"
+
 const Stylist = require('../models/stylist');
 const Skill = require('../models/skill');
 const BarberSkill = require('../models/barberSkill');
@@ -7,38 +9,43 @@ const skill = require('../models/skill');
 const workHours = require('../models/workHours');
 const stylist = require('../models/stylist');
 const Moment = require('moment');
-
-
+const organisation = require('../models/Addresses');
 
 async function customerAppointments(req, res) {
 
-    
-
-
-    var ca = await CustomerAppointment.find({ customerId: req.query.customerId}).exec();
+    var ca = await CustomerAppointment.find({ customerId: req.query.customerId }).exec();
     var customerApp = [];
 
-    for (const el of ca)
-    {
+    for (const el of ca) {
 
-    var barber = await stylist.findOne({ _id:el.barberId}).exec()
-    var skill = await Skill.findOne({_id: el.skillId}).exec();
+        var barber = await stylist.findOne({ _id: el.barberId }).exec()
+        var skill = await Skill.findOne({ _id: el.skillId }).exec();
 
-    customerApp.push({
-        barber: barber.Name, skill: skill.Name, price: skill.Price, startTime: el.startTime,
-        endTime: el.endTime, date: el.date
-    })
+        customerApp.push({
+            barber: barber.Name, skill: skill.Name, price: skill.Price, startTime: el.startTime,
+            endTime: el.endTime, date: el.date
+        })
+    }
 
+    return res.send({ customerApp }).status(200);
 }
 
 
-    console.log(customerApp);
-    return res.send({customerApp}).status(200);
-   
+async function company(req, res) {
+    const { city } = req.query
+
+    organisation.find({ town: city }, function (err, organisation) {
+        if (err) {
+            return res.send({ message: 'cant get og' }).status(403);
+        }
+        else {
+            return res.send({ organisation }).status(200);
+        }
+    })
 }
 
 async function Barbers(req, res) {
-    Stylist.find({}, function (err, stylists) {
+    Stylist.find({organisationId:organisationId}, function (err, stylists) {
         if (err) {
             return res.send({ message: 'cant add barber skill' }).status(403);
         }
@@ -91,7 +98,7 @@ async function timeSlots(req, res) {
 
 async function HoursOfWork(req, res) {
 
-    workHours.find({ barberId: req.query.barberId, date: Moment(req.query.date)}, function (err, time) {
+    workHours.find({ barberId: req.query.barberId, date: Moment(req.query.date) }, function (err, time) {
 
         if (err) {
             return res.send({ message: 'Hours of work error' }).status(403);
@@ -105,7 +112,7 @@ async function HoursOfWork(req, res) {
 
 async function appointments(req, res) {
 
-    CustomerAppointment.find({ barberId: req.query.barberId, date: Moment(req.query.date)}, function (err, bookings) {
+    CustomerAppointment.find({ barberId: req.query.barberId, date: Moment(req.query.date) }, function (err, bookings) {
 
         if (err) {
             return res.send({ message: 'appointments of work error' }).status(403);
@@ -120,7 +127,7 @@ async function appointments(req, res) {
 
 async function skills(req, res) {
 
-    Skill.find({}, function (err, skills) {
+    Skill.find({organisationId:req.query.organisationId}, function (err, skills) {
 
         if (err) {
             return res.send({ message: 'cannot get skills' }).status(403);
@@ -128,7 +135,6 @@ async function skills(req, res) {
         else {
             return res.send({ skills }).status(200);
         }
-
     })
 }
 
@@ -158,8 +164,6 @@ async function barberSkills(req, res) {
     })
 }
 
-
-
 module.exports = {
     Barbers,
     barberSkills,
@@ -168,5 +172,6 @@ module.exports = {
     appointments,
     skills,
     skilledBarbers,
-    customerAppointments
+    customerAppointments,
+    company
 }

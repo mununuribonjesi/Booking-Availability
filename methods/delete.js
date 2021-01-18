@@ -1,3 +1,4 @@
+"use strict"
 
 const CustomerAppointment = require('../models/appointment');
 const Stylist = require('../models/stylist');
@@ -8,13 +9,14 @@ async function appointment(req, res) {
 
     Stylist.findOne({ Name: req.body.name }, function (err, stylist) {
 
-        if (stylist) 
-        {
+        if (stylist) {
 
         }
 
-        CustomerAppointment.findOneAndDelete({ barberId: stylist._id, startTime: Moment(req.body.date + 'T' + req.body.startTime), 
-        endTime: Moment(req.body.date + 'T' + req.body.endTime) }, function (err, app) {
+        CustomerAppointment.findOneAndDelete({
+            barberId: stylist._id, startTime: Moment(req.body.date + 'T' + req.body.startTime),
+            endTime: Moment(req.body.date + 'T' + req.body.endTime)
+        }, function (err, app) {
 
             if (err) {
                 return res.status(400).send({ error: 'unable to send delete appointment' });

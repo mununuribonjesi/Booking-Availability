@@ -1,3 +1,5 @@
+"use strict"
+
 const Stylist = require('../models/stylist');
 const Skill = require('../models/skill');
 const BarberSkill = require('../models/barberSkill');
@@ -7,13 +9,14 @@ const WorkHours = require('../models/workHours')
 const Moment = require('moment');
 
 var moment = require('moment');
+const Organisation = require('../models/Addresses');
 
 
 async function Barber(req, res) {
-    console.log(req.tableNo)
 
-    stylist = new Stylist({
-        Name: req.body.Name
+    var stylist = new Stylist({
+        name: req.body.name,
+        organisationId: req.body.organisationId
     })
 
     stylist.save(function (err, stylist) {
@@ -26,274 +29,117 @@ async function Barber(req, res) {
     })
 }
 
-async function editAppointment(req,res,payload)
-{
+async function deleteAppointment(req, res) {
 
-    
-    CustomerAppointment.findOne({_id:req.body.id}, function (err, custApp) {
+    CustomerAppointment.findOne({ _id: req.body.id }, function (err, custApp) {
 
         if (!custApp) {
             return res.send({ message: 'cant find this appointment' }).status(403);
         }
 
-        BarberAvailability.findByIdAndUpdate(custApp.avalabilityId,{isAvailable:true}, function (err, barber) {
+        BarberAvailability.findByIdAndUpdate(custApp.avalabilityId, { isAvailable: true }, function (err, barber) {
             if (err) {
                 return res.send({ message: 'cant update this appointment' }).status(403);
             }
-        
         })
 
+        CustomerAppointment.findByIdAndDelete(custApp._id, function (err) {
 
-            Skill.findOne({ Name: req.body.skillName }, function (err, skill) {
-                if (!skill) return res.status(400).send({ msg: 'We were unable to find this skill.'})
-
-                Stylist.findOne({ Name: req.body.stylistName }, function (err, stylist) {
-
-                    if (stylist)
-                    {
-            
-                        console.log(stylist._id)
-                    }
-
-
-            BarberAvailability.findOne({ barberId:stylist._id, startTime: req.body.startTime, endTime: req.body.endTime, date: req.body.date }, function (err, barber) {
-        
-                if(barber)
-                {
-                if (!barber.isAvailable) {
-        
-                    console.log(barber.isAvailable)
-                    return res.status(400).send({ msg: 'We were unable to find an appointment for this date.' });
-             
-                }
-                else 
-                {
-
-                    barber.isAvailable = false;
-                    barber.save(function (err,availability) {
-                        if (err) { return res.status(500).send({ msg: err.message }); }
-        
-                        CustomerAppointment.findByIdAndUpdate(req.body.id,{barberId: stylist._id,avalabilityId: availability._id,skillId: skill._id,customerId: payload._id})
-        
-                    });
-                }
+            if (err) {
+                return res.send({ message: 'cant update this appointment' }).status(403);
             }
-        
-            else 
-            {
-                return res.status(400).send({ msg: 'We were unable to find an appointment for this date.' });
-            }
-        
-            });
-
-        })   
-    })    
-
+            return res.send({ message: 'appointment has been successfully removed' }).status(200);
+        })
     })
-        
 }
 
+async function registerOrganisation(req, res) {
+    var og = new Organisation({
+        companyName: req.body.companyName,
+        addressLine1: req.body.addressLine1,
+        addressLine2: req.body.addressLine2,
+        town: req.body.town,
+        county: req.body.county,
+        postCode: req.body.postCode,
+        uri:req.body.uri
+    })
 
-async function deleteAppointment(req,res)
-{
-
-    CustomerAppointment.findOne({_id:req.body.id}, function (err, custApp) {
-
-        if (!custApp) {
-            return res.send({ message: 'cant find this appointment' }).status(403);
+    og.save(function (err, company) {
+        if (err) {
+            return res.send({ message: 'Add Address failed' }).status(403);
         }
+        else {
 
-        console.log(custApp.avalabilityId)
-
-        BarberAvailability.findByIdAndUpdate(custApp.avalabilityId,{isAvailable:true}, function (err, barber) {
-            if (err) {
-                return res.send({ message: 'cant update this appointment' }).status(403);
-            }
-        
-        })
-
-
-
-
-        CustomerAppointment.findByIdAndDelete(custApp._id,function (err) {
-
-            if (err) {
-                return res.send({ message: 'cant update this appointment' }).status(403);
-            }
-
-     
-
-                return res.send({ message: 'appointment has been successfully removed' }).status(200);
-
-        })
-
-    })
-
+            return res.send({ message: company }).status(200);
+        }
+    });
 }
 
 
-async function createAppointment(req, res,payload) {
+async function createAppointment(req, res, payload) {
 
     Stylist.findOne({ Name: req.body.name }, function (err, stylist) {
 
-        if (stylist)
-        {
+        if (stylist) {
 
             console.log(stylist._id)
         }
-        
+
+        Skill.findOne({ Name: req.body.skill }, function (err, skill) {
+            if (!skill) return res.status(400).send({ msg: 'We were unable to find this skill.' });
+
+            var customerAppointment = new CustomerAppointment
+                ({
+                    barberId: stylist._id,
+                    startTime: Moment(req.body.date + 'T' + req.body.startTime),
+                    endTime: Moment(req.body.date + 'T' + req.body.endTime),
+                    date: Moment(req.body.date),
+                    skillId: skill._id,
+                    customerId: payload._id,
+                })
 
 
-    Skill.findOne({ Name: req.body.skill }, function (err, skill) {
-         if (!skill) return res.status(400).send({ msg: 'We were unable to find this skill.' });
+            customerAppointment.save(function (err, customerAppointment) {
+                if (err) {
+                    return res.send({ message: 'added appointment' }).status(403);
+                }
+                else {
+                    return res.send({ message: customerAppointment }).status(200);
+                }
 
+            });
 
-            customerAppointment = new CustomerAppointment
-            ({
-                barberId: stylist._id,
-                startTime:Moment(req.body.date+'T'+req.body.startTime),
-                endTime:Moment(req.body.date+'T'+req.body.endTime),
-                date:Moment(req.body.date),
-                skillId: skill._id,
-                customerId: payload._id,
-            })
-
-    
-            customerAppointment.save(function (err,customerAppointment) {
-                    if (err) {
-                        return res.send({ message: 'added appointment' }).status(403);
-                    }
-                    else {
-                        return res.send({ message: customerAppointment }).status(200);
-                    }
-                    
-                });
-
+        });
     });
-});
-     
+
 }
 
-async function HoursOfWork(req,res)
-{
+async function HoursOfWork(req, res) {
 
-    Stylist.findOne({ Name: req.body.name }, function (err, stylist) {
+    Stylist.findOne({ name: req.body.name }, function (err, stylist) {
 
-        if (err)
-        {
+        if (err) {
 
             return res.send({ message: 'cant find the barber' }).status(403);
         }
 
-    workHours = new WorkHours({
-        barberId: stylist._id,
-        startTime:Moment(req.body.date+'T'+req.body.startTime),
-        endTime:Moment(req.body.date+'T'+req.body.endTime),
-        date:Moment(req.body.date),
-    })
+        var workHours = new WorkHours({
+            barberId: stylist._id,
+            startTime: Moment(req.body.date + 'T' + req.body.startTime),
+            endTime: Moment(req.body.date + 'T' + req.body.endTime),
+            date: Moment(req.body.date),
+        })
 
-
-    workHours.save(function (err,customerAppointment) {
-        if (err) {
-            return res.send({ message: 'could not add work hours' }).status(403);
-        }
-        else {
-            return res.send({ message: 'added barber work hours' }).status(200);
-        }
-        
-    });
-
-
+        workHours.save(function (err, customerAppointment) {
+            if (err) {
+                return res.send({ message: 'could not add work hours' }).status(403);
+            }
+            else {
+                return res.send({ message: 'added barber work hours' }).status(200);
+            }
+        });
     })
 }
-
-
-async function StylistAvailability(req, res) {
-
-    var a = moment('2020-11-30');
-    var b = moment('2020-12-30');
-    var value = {
-        interval: '00:30:00',
-        startTime: '09:00:00',
-        endTime: '20:00:00'
-    };
-
-    var inputDataFormat = "HH:mm:ss";
-    var outputFormat = "HH:mm";
-
-    var tmp = moment(value.interval, inputDataFormat);
-    var dif = tmp - moment().startOf("day");
-
-    var startIntervalTime = moment(value.startTime, inputDataFormat).add(-dif, "ms");
-    var endIntervalTime = moment(value.startTime, inputDataFormat);
-    var finishTime = moment(value.endTime, inputDataFormat);
-
-    Stylist.findOne({ Name: req.body.stylistName }, function (err, stylist) {
-        if (!stylist) return res.status(400).send({ msg: 'We were unable to find this stylist.' });
-
-        var obj = [];
-
-        for (var m = moment(a); m.diff(b, 'days') <= 0; m.add(1, 'days')) {
-
-
-            while (startIntervalTime < finishTime) {
-                obj.push({
-                    barberId: stylist._id,
-                    startTime: startIntervalTime.format(outputFormat),
-                    endTime: endIntervalTime.format(outputFormat),
-                    date: m.format('YYYY-MM-DD'),
-                    isAvailable: true
-                });
-                startIntervalTime.add(dif, "ms");
-                endIntervalTime.add(dif, "ms");
-            }
-
-            var startIntervalTime = moment(value.startTime, inputDataFormat).add(-dif, "ms");
-            var endIntervalTime = moment(value.startTime, inputDataFormat);
-
-        }
-
-
-           var count = 0;
-           var recordsAdded = 0;
-  
-           for (let object of obj)
-           {
-                BarberAvailability.findOne({ barberId: object.barberId, startTime: object.startTime, endTime: object.endTime, date: object.date }, function (err, barber) {
-                    if (barber) {
-
-
-                   
-            }
-
-            else 
-            {
-
-                BarberAvailability.insertMany({
-                    barberId: object.barberId,
-                    startTime: object.startTime,
-                    endTime: object.endTime,
-                    date: object.date,
-                    isAvailable: object.isAvailable
-                }).then(function () {
-            
-                }).catch(function (error) {
-                    console.log(error);         
-            })
-            }
-            });
-
-            count++;
-
-            if(count === obj.length)
-            {
-                return res.send({ message: 'add availibity done ' + recordsAdded + ' of ' + obj.length + ' added ' }).status(200);
-            }
-        }
-    });
-}
-
-
 
 
 async function BarberSkills(req, res) {
@@ -304,7 +150,7 @@ async function BarberSkills(req, res) {
         Skill.findOne({ Name: req.body.skillName }, function (err, skill) {
             if (!skill) return res.status(400).send({ msg: 'We were unable to find this skill.' });
 
-            barberSkill = new BarberSkill({
+            var barberSkill = new BarberSkill({
                 barberId: stylist._id,
                 skillId: skill._id
             })
@@ -324,10 +170,11 @@ async function BarberSkills(req, res) {
 
 async function Skills(req, res) {
 
-    skill = new Skill({
-        Name: req.body.Name,
-        Price: req.body.Price,
-        Duration: req.body.Duration
+    var skill = new Skill({
+        name: req.body.name,
+        price: req.body.price,
+        duration: req.body.duration,
+        organisationId: req.body.organisationId
     })
 
     skill.save(function (err, skill) {
@@ -344,9 +191,8 @@ module.exports = {
     Barber,
     Skills,
     BarberSkills,
-    StylistAvailability,
     createAppointment,
     deleteAppointment,
-    editAppointment,
-    HoursOfWork
+    HoursOfWork,
+    registerOrganisation
 }

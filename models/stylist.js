@@ -3,8 +3,10 @@ var Schema = mongoose.Schema;
 
 
 const schema = mongoose.Schema({
-        Name:{type:String},
+        name:{type:String},
         isBarber:{type:Boolean,default:true},
+        organisationId:{type:String}
+
 })
 
 

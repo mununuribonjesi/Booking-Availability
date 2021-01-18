@@ -4,9 +4,10 @@ var Schema = mongoose.Schema;
 
 
 const schema = mongoose.Schema({
-    Name: {type:String,required:true},
-    Price:{type:Number},
-    Duration:{type:String}
+    name: {type:String,required:true},
+    price:{type:Number},
+    duration:{type:String},
+    organisationId:{type:String,required:true}
 })
 
 
