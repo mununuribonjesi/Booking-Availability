@@ -78,14 +78,14 @@ async function registerOrganisation(req, res) {
 
 async function createAppointment(req, res, payload) {
 
-    Stylist.findOne({ Name: req.body.name }, function (err, stylist) {
+    Stylist.findOne({ name: req.body.name }, function (err, stylist) {
 
         if (stylist) {
 
             console.log(stylist._id)
         }
 
-        Skill.findOne({ Name: req.body.skill }, function (err, skill) {
+        Skill.findOne({ name: req.body.skill }, function (err, skill) {
             if (!skill) return res.status(400).send({ msg: 'We were unable to find this skill.' });
 
             var customerAppointment = new CustomerAppointment
@@ -144,15 +144,12 @@ async function HoursOfWork(req, res) {
 
 async function BarberSkills(req, res) {
 
-    Stylist.findOne({ Name: req.body.stylistName }, function (err, stylist) {
+    Stylist.findOne({ name: req.body.stylistName }, function (err, stylist) {
         if (!stylist) return res.status(400).send({ msg: 'We were unable to find this stylist.' });
-
-        Skill.findOne({ Name: req.body.skillName }, function (err, skill) {
-            if (!skill) return res.status(400).send({ msg: 'We were unable to find this skill.' });
 
             var barberSkill = new BarberSkill({
                 barberId: stylist._id,
-                skillId: skill._id
+                skillId: req.body.skillId
             })
 
             barberSkill.save(function (err, barberSkill) {
@@ -163,8 +160,6 @@ async function BarberSkills(req, res) {
                     return res.send({ message: barberSkill }).status(200);
                 }
             })
-
-        });
     });
 }
 
