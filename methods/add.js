@@ -85,7 +85,7 @@ async function createAppointment(req, res, payload) {
             console.log(stylist._id)
         }
 
-        Skill.findOne({ name: req.body.skill }, function (err, skill) {
+        Skill.findOne({ _id: req.body.skill }, function (err, skill) {
             if (!skill) return res.status(400).send({ msg: 'We were unable to find this skill.' });
 
             var customerAppointment = new CustomerAppointment

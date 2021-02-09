@@ -8,6 +8,8 @@ const schema = mongoose.Schema({
     date: {type:Date,required:true},
 })
 
+schema.index({barberId:1,startTime:1,endTime:1,date:1},{unique:true});
+
 module.exports = mongoose.model('WorkHours',schema);
 
 

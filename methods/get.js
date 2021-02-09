@@ -10,6 +10,7 @@ const workHours = require('../models/workHours');
 const stylist = require('../models/stylist');
 const Moment = require('moment');
 const organisation = require('../models/Addresses');
+const { response } = require('express');
 
 async function customerAppointments(req, res) {
 
@@ -27,8 +28,48 @@ async function customerAppointments(req, res) {
         })
     }
 
-    return res.send({ customerApp }).status(200);
+    res.send({ customerApp }).status(200);
 }
+
+async function existingAppointment(req, res) {
+
+    Stylist.findOne({ name: req.query.name }, function (err, stylist) {
+
+        if (stylist) {
+
+            console.log(stylist._id)
+        }
+
+        Skill.findOne({ _id: req.query.skill }, function (err, skill) {
+            if (!skill) return res.status(400).send({ msg: 'We were unable to find this skill.' });
+
+                CustomerAppointment.exists({ barberId:stylist._id ,startTime:Moment(req.query.date + 'T' + req.query.startTime)
+                ,endTime:Moment(req.query.date + 'T' + req.query.endTime),date: Moment(req.query.date) }, function (err, cust) {
+
+                    if(err)
+                    {
+                        console.log('does not already exists')
+                        console.log(err);
+                        res.status(500).send({ message: err });
+                    }
+
+                    if(!cust)
+                    {
+
+                        res.status(200).send({ message: cust });
+                    }
+
+                    if(cust)
+                    {
+                        res.status(500).send({message:'appointment exists'});
+                    }
+    
+                })
+
+        });
+    });
+}
+
 
 
 async function company(req, res) {
@@ -176,5 +217,6 @@ module.exports = {
     skills,
     skilledBarbers,
     customerAppointments,
-    company
+    company,
+    existingAppointment
 }

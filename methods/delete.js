@@ -7,7 +7,7 @@ const Moment = require('moment');
 
 async function appointment(req, res) {
 
-    Stylist.findOne({ Name: req.body.name }, function (err, stylist) {
+    Stylist.findOne({ name: req.body.name }, function (err, stylist) {
 
         if (stylist) {
 

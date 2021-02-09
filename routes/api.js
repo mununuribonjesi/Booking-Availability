@@ -24,6 +24,25 @@ router.post('/barber', async function (req, res, next) {
 
 });
 
+
+router.get('/findappointments', async function (req, res, next) {
+
+  if(!req.headers['authorization']) return res.sendStatus(403);
+
+  const Auth = await security.Authorization(req);
+
+  if(Auth.status==200)
+  {
+    get.existingAppointment(req,res);
+  }
+  else
+  {
+    return res.sendStatus(403)
+  }
+
+});
+
+
 router.get('/customerAppointments', async function (req, res, next) {
 
   if(!req.headers['authorization']) return res.sendStatus(403);
@@ -281,7 +300,7 @@ router.post('/appointment/delete', async function (req, res, next) {
 
   if(Auth.status==200)
   {
-    add.deleteAppointment(req,res);
+    remove.appointment(req,res)
   }
   else
   {
