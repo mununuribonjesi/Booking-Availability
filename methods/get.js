@@ -10,7 +10,8 @@ const workHours = require('../models/workHours');
 const stylist = require('../models/stylist');
 const Moment = require('moment');
 const organisation = require('../models/Addresses');
-const { response } = require('express');
+
+
 
 async function customerAppointments(req, res) {
 
@@ -19,15 +20,18 @@ async function customerAppointments(req, res) {
 
     for (const el of ca) {
 
-        var barber = await stylist.findOne({ _id: el.barberId }).exec()
+        var barber = await stylist.findOne({ _id: el.barberId }).exec();
         var skill = await Skill.findOne({ _id: el.skillId }).exec();
-
+        var shop = await organisation.findOne({_id:barber.organisationId}).exec();
+      
         customerApp.push({
-            barber: barber.Name, skill: skill.Name, price: skill.Price, startTime: el.startTime,
-            endTime: el.endTime, date: el.date
+            barber: barber.name, skill: skill.name, price: skill.price, startTime: el.startTime,
+            endTime: el.endTime, date: el.date,addressLine1:shop.addressLine1,town:shop.town,
+            county:shop.county,postCode:shop.postCode,companyName:shop.companyName
         })
     }
 
+    console.log(customerApp);
     res.send({ customerApp }).status(200);
 }
 
