@@ -77,13 +77,28 @@ async function existingAppointment(req, res) {
 
 
 async function company(req, res) {
-    const { city } = req.query
+    const { lat,long } = req.query
+    var METERS_PER_MILE = 1609.34
 
-    organisation.find({ town: city }, function (err, organisation) {
+
+    console.log(lat,long);
+
+
+    organisation.find({ location:{ $near:{$geometry:{type:"Point",coordinates:[lat,long]},
+    $maxDistance: 50 * METERS_PER_MILE,
+},
+
+
+
+
+}}, function (err, organisation) {
+
         if (err) {
+            console.log(err);
             return res.send({ message: 'cant get og' }).status(403);
         }
         else {
+            console.log(organisation);
             return res.send({ organisation }).status(200);
         }
     })

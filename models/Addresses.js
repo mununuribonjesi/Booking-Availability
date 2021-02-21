@@ -8,8 +8,20 @@ const schema = mongoose.Schema({
     town: {type:String,required:true},
     county: {type:String,required:true},
     postCode: {type:String,required:true},
-    uri:{type:String}
+    uri:{type:String},
+    location:{
+        type: {
+            type: String,
+            enum: ['Point'],
+            required: true
+          },
+          coordinates: {
+            type: [Number],
+            required: true
+          }
+    }
 })
 
+schema.index({location: "2d"});
 module.exports = mongoose.model('Address',schema);
 
