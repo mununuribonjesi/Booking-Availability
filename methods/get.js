@@ -83,9 +83,9 @@ async function company(req, res) {
 
  organisation.aggregate(
         [{$geoNear: {
-            near: { type: "Point", coordinates: [53.383331 , -1.466667 ] },
+            near: { type: "Point", coordinates: [Number(lat),Number(long)] },
                     distanceField: "distance",
-                    maxDistance:METERS_PER_MILE*30,
+                    maxDistance:METERS_PER_MILE*20,
                     distanceMultiplier:1/METERS_PER_MILE,
                     spherical: true
           }}],function (err, organisation) {
