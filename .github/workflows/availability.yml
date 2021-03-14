@@ -25,4 +25,3 @@ jobs:
           aws-region: eu-central-1
           function_name: AvailibilityService
       - name: Serverless Deploy
-        run: npm start
