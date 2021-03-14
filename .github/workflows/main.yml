@@ -1,0 +1,7 @@
+name: Deploy AWS Lambda function
+  uses: yvesgurcan/deploy-lambda-function@1fc74179f8ac3a43e7e6b0f7c643b6f5f0bca43f
+  with:
+    function-name: AvailabilityService
+    AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    AWS_SECRET_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    AWS_REGION: us-east-2
