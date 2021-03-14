@@ -1,4 +1,3 @@
-
 name: deploy to lambda
 on: [push]
 jobs:
@@ -14,5 +13,5 @@ jobs:
         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws_region: us-east-2
         function_name: AvailabilityService
-        zip_file: output.zip
+        zip_file: bundle.zip
         dry_run: true
