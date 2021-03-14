@@ -5,7 +5,7 @@ const router = express.Router();
 const add = require('../methods/add');
 const get = require('../methods/get');
 const remove = require('../methods/delete');
-const security = require('../methods/Authorization')
+const security = require('../methods/Authorization');
 
 router.post('/barber', async function (req, res, next) {
 
