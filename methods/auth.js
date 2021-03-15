@@ -2,7 +2,7 @@
 
 const axios = require('axios');
 
-async function Authorization(req) {
+async function authorization(req) {
   const authHeader = req.headers['authorization'];
   const bearerToken = authHeader.split(' ');
   const token = bearerToken[1];
@@ -20,5 +20,5 @@ async function Authorization(req) {
 }
 
 module.exports = {
-  Authorization
+  authorization
 }
