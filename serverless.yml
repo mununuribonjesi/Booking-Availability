@@ -61,4 +61,4 @@ functions:
     handler: index.handler
     events:
       - http: ANY {proxy+}
-      - http: ANY / 
+      - http: ANY /
