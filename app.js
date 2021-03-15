@@ -1,5 +1,5 @@
 "use strict";
-
+const serverless = require('serverless-http');
 var express = require('express');
 var app = express();
 const mongoose = require('mongoose');
@@ -42,7 +42,8 @@ app.use('/api',api);
 app.get('/', (req, res) => {
   res.send('availability service!')
 })
-const port = process.env.Port || 5000;
+// const port = process.env.Port || 5000;
 
-app.listen(port);
+// app.listen(port);
 
+module.exports.handler = serverless(app)
