@@ -57,5 +57,4 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  app:
     handler: index.handler
