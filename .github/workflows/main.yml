@@ -24,4 +24,4 @@ jobs:
           aws-session-token: ${{secrets.AWS_SESSION_TOKEN}}
           aws-region: us-east-1
       - name: deploy
-        run: serverless deploy --stage production
+        run: serverless deploy
