@@ -12,7 +12,7 @@ require('./routes/config/passport-config');
 require('dotenv').config();
 
 mongoose.connect(
-    'mongodb://MuniBanks:<insertYourPassword>@docdb-2021-03-15-14-02-48.cluster-calvsd7c3i7n.us-east-1.docdb.amazonaws.com:27017/?ssl=true&ssl_ca_certs=rds-combined-ca-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false', 
+    'mongodb://MuniBanks:<225231mB>@docdb-2021-03-15-14-02-48.cluster-calvsd7c3i7n.us-east-1.docdb.amazonaws.com:27017/?ssl=true&ssl_ca_certs=rds-combined-ca-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false', 
 { 
         sslValidate: true,
         sslCA:ca,
