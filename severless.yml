@@ -1,14 +1,13 @@
-service: my-express-application
-4
-5provider:
-6  name: aws
-7  runtime: nodejs6.10
-8  stage: dev
-9  region: us-east-1
-10
-11functions:
-12  app:
-13    handler: index.handler
-14    events:
-15      - http: ANY /
-16      - http: 'ANY {proxy+}'
+service: Article-Test
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+
+functions:
+  app:
+    handler: index.handler
+    events:
+      - http: ANY /
+      - http: 'ANY {proxy+}'
