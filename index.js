@@ -12,7 +12,7 @@ require('./routes/config/passport-config');
 require('dotenv').config();
 
 mongoose.connect(
-    "mongodb+srv://MuniBanks:<225231>@cluster0.j1t7o.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", 
+    "mongodb+srv://MuniBanks:225231@cluster0.j1t7o.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", 
 { 
         useNewUrlParser: true
 },
