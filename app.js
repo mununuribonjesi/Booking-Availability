@@ -6,7 +6,6 @@ const mongoose = require('mongoose');
 const api = require('./routes/api');
 var express = require('express');
 var passport = require('passport');
-var bodyParser = require('body-parser');
 var cors = require('cors');
 const router = express.Router();
 require('./routes/config/passport-config');
