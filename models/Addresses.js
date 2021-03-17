@@ -22,6 +22,6 @@ const schema = mongoose.Schema({
     }
 })
 
-schema.index({location: "2d"});
+schema.index({location: "2dsphere"});
 module.exports = mongoose.model('Address',schema);
 
