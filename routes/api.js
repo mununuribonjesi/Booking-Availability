@@ -25,6 +25,13 @@ router.post('/barber', async function (req, res, next) {
 });
 
 
+
+router.get('/test', async function(eq,res)
+{
+   res.send('api up and running');
+});
+
+
 router.get('/findappointments', async function (req, res, next) {
 
   if(!req.headers['authorisation']) return res.sendStatus(403);
