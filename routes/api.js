@@ -9,7 +9,7 @@ const security = require('../methods/auth');
 
 router.post('/barber', async function (req, res, next) {
 
-  const Auth = await security.authorisation(req);
+  const Auth = await security.authorization(req);
 
   if(Auth.status==200)
   {
@@ -32,7 +32,7 @@ router.get('/test', async function(eq,res)
 
 router.get('/findappointments', async function (req, res, next) {
 
-  const Auth = await security.authorisation(req);
+  const Auth = await security.authorization(req);
 
   if(Auth.status==200)
   {
@@ -48,7 +48,7 @@ router.get('/findappointments', async function (req, res, next) {
 
 router.get('/customerAppointments', async function (req, res, next) {
 
-  const Auth = await security.authorisation(req);
+  const Auth = await security.authorization(req);
 
   if(Auth.status==200)
   {
@@ -63,7 +63,7 @@ router.get('/customerAppointments', async function (req, res, next) {
 
 router.post('/workHours', async function (req, res, next) {
 
-  const Auth = await security.authorisation(req);
+  const Auth = await security.authorization(req);
 
   if(Auth.status==200)
   {
@@ -78,7 +78,7 @@ router.post('/workHours', async function (req, res, next) {
 
 router.get('/workHours', async function (req, res, next) {
 
-  const Auth = await security.authorisation(req);
+  const Auth = await security.authorization(req);
 
   if(Auth.status==200)
   {
@@ -95,7 +95,7 @@ router.get('/skilledBarbers', async function (req, res, next) {
 
   if(!req.headers['Authorization']) return res.sendStatus(403);
 
-  const Auth = await security.authorisation(req);
+  const Auth = await security.authorization(req);
 
   if(Auth.status==200)
   {
@@ -110,7 +110,7 @@ router.get('/skilledBarbers', async function (req, res, next) {
 
 router.get('/skills', async function (req, res, next) {
 
-  const Auth = await security.authorisation(req);
+  const Auth = await security.authorization(req);
 
   if(Auth.status==200)
   {
@@ -124,7 +124,7 @@ router.get('/skills', async function (req, res, next) {
 
 router.get('/appointments', async function (req, res, next) {
 
-  const Auth = await security.authorisation(req);
+  const Auth = await security.authorization(req);
 
   if(Auth.status==200)
   {
@@ -139,7 +139,7 @@ router.get('/appointments', async function (req, res, next) {
 
 router.get('/timeSlots', async function (req, res, next) {
 
-  const Auth = await security.authorisation(req);
+  const Auth = await security.authorization(req);
 
   if(Auth.status==200)
   {
@@ -154,7 +154,7 @@ router.get('/timeSlots', async function (req, res, next) {
 
 router.get('/barberSkills', async function (req, res, next) {
 
-  const Auth = await security.authorisation(req);
+  const Auth = await security.authorization(req);
 
   if(Auth.status==200)
   {
@@ -169,7 +169,7 @@ router.get('/barberSkills', async function (req, res, next) {
 
 router.get('/barbers', async function (req, res, next) {
 
-  const Auth = await security.authorisation(req);
+  const Auth = await security.authorization(req);
 
   if(Auth.status==200)
   {
@@ -184,7 +184,7 @@ router.get('/barbers', async function (req, res, next) {
 
 router.post('/skill', async function (req, res, next) {
 
-  const Auth = await security.authorisation(req);
+  const Auth = await security.authorization(req);
 
   if(Auth.status==200)
   {
@@ -199,7 +199,7 @@ router.post('/skill', async function (req, res, next) {
 
 router.post('/barberSkill', async function (req, res, next) {
 
-  const Auth = await security.authorisation(req);
+  const Auth = await security.authorization(req);
 
   if(Auth.status==200)
   {
@@ -215,7 +215,7 @@ router.post('/barberSkill', async function (req, res, next) {
 
 router.post('/availability', async function (req, res, next) {
 
-  const Auth = await security.authorisation(req);
+  const Auth = await security.authorization(req);
 
   if(Auth.status==200)
   {
@@ -231,7 +231,7 @@ router.post('/availability', async function (req, res, next) {
 
 router.post('/appointment', async function (req, res, next) {
 
-  const Auth = await security.authorisation(req);
+  const Auth = await security.authorization(req);
 
   if(Auth.status==200)
   {
@@ -246,9 +246,9 @@ router.post('/appointment', async function (req, res, next) {
 
 router.post('/organisation', async function (req, res, next) {
 
-  //if(!req.headers['authorisation']) return res.sendStatus(403);
+  //if(!req.headers['authorization']) return res.sendStatus(403);
 
-  //const Auth = await security.authorisation(req);
+  //const Auth = await security.authorization(req);
 
  
     add.registerOrganisation(req,res);
@@ -259,8 +259,8 @@ router.post('/organisation', async function (req, res, next) {
 
 router.get('/organisation', async function (req, res, next) {
 
-  //if(!req.headers['authorisation']) return res.sendStatus(403);
-  //const Auth = await security.authorisation(req);
+  //if(!req.headers['authorization']) return res.sendStatus(403);
+  //const Auth = await security.authorization(req);
 
 
     get.company(req,res);
@@ -271,7 +271,7 @@ router.get('/organisation', async function (req, res, next) {
 
 router.post('/appointment/delete', async function (req, res, next) {
 
-  const Auth = await security.authorisation(req);
+  const Auth = await security.authorization(req);
 
   if(Auth.status==200)
   {
@@ -287,7 +287,7 @@ router.post('/appointment/delete', async function (req, res, next) {
 
 router.delete('/appointment', async function (req, res, next) {
 
-  const Auth = await security.authorisation(req);
+  const Auth = await security.authorization(req);
 
   if(Auth.status==200)
   {
