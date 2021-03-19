@@ -9,7 +9,7 @@ const security = require('../methods/auth');
 
 router.post('/barber', async function (req, res, next) {
 
-  if(!req.headers['authorisation']) return res.sendStatus(403);
+  if(!req.headers['Authorization']) return res.sendStatus(403);
 
   const Auth = await security.authorisation(req);
 
@@ -34,7 +34,7 @@ router.get('/test', async function(eq,res)
 
 router.get('/findappointments', async function (req, res, next) {
 
-  if(!req.headers['authorisation']) return res.sendStatus(403);
+  if(!req.headers['Authorization']) return res.sendStatus(403);
 
   const Auth = await security.authorisation(req);
 
@@ -52,7 +52,7 @@ router.get('/findappointments', async function (req, res, next) {
 
 router.get('/customerAppointments', async function (req, res, next) {
 
-  if(!req.headers['authorisation']) return res.sendStatus(403);
+  if(!req.headers['Authorization']) return res.sendStatus(403);
 
   const Auth = await security.authorisation(req);
 
@@ -69,7 +69,7 @@ router.get('/customerAppointments', async function (req, res, next) {
 
 router.post('/workHours', async function (req, res, next) {
 
-  if(!req.headers['authorisation']) return res.sendStatus(403);
+  if(!req.headers['Authorization']) return res.sendStatus(403);
 
   const Auth = await security.authorisation(req);
 
@@ -86,7 +86,7 @@ router.post('/workHours', async function (req, res, next) {
 
 router.get('/workHours', async function (req, res, next) {
 
-  if(!req.headers['authorisation']) return res.sendStatus(403);
+  if(!req.headers['Authorization']) return res.sendStatus(403);
 
   const Auth = await security.authorisation(req);
 
@@ -103,7 +103,7 @@ router.get('/workHours', async function (req, res, next) {
 
 router.get('/skilledBarbers', async function (req, res, next) {
 
-  if(!req.headers['authorisation']) return res.sendStatus(403);
+  if(!req.headers['Authorization']) return res.sendStatus(403);
 
   const Auth = await security.authorisation(req);
 
@@ -120,7 +120,7 @@ router.get('/skilledBarbers', async function (req, res, next) {
 
 router.get('/skills', async function (req, res, next) {
 
-  if(!req.headers['authorisation']) return res.sendStatus(403);
+  if(!req.headers['Authorization']) return res.sendStatus(403);
 
   const Auth = await security.authorisation(req);
 
@@ -136,7 +136,7 @@ router.get('/skills', async function (req, res, next) {
 
 router.get('/appointments', async function (req, res, next) {
 
-  if(!req.headers['authorisation']) return res.sendStatus(403);
+  if(!req.headers['Authorization']) return res.sendStatus(403);
 
   const Auth = await security.authorisation(req);
 
@@ -153,7 +153,7 @@ router.get('/appointments', async function (req, res, next) {
 
 router.get('/timeSlots', async function (req, res, next) {
  
-  if(!req.headers['authorisation']) return res.sendStatus(403);
+  if(!req.headers['Authorization']) return res.sendStatus(403);
 
   const Auth = await security.authorisation(req);
 
@@ -170,7 +170,7 @@ router.get('/timeSlots', async function (req, res, next) {
 
 router.get('/barberSkills', async function (req, res, next) {
 
-  if(!req.headers['authorisation']) return res.sendStatus(403);
+  if(!req.headers['Authorization']) return res.sendStatus(403);
 
   const Auth = await security.authorisation(req);
 
@@ -188,7 +188,7 @@ router.get('/barberSkills', async function (req, res, next) {
 router.get('/barbers', async function (req, res, next) {
 
 
-  if(!req.headers['authorisation']) return res.sendStatus(403);
+  if(!req.headers['Authorization']) return res.sendStatus(403);
 
   const Auth = await security.authorisation(req);
 
@@ -205,7 +205,7 @@ router.get('/barbers', async function (req, res, next) {
 
 router.post('/skill', async function (req, res, next) {
 
-  if(!req.headers['authorisation']) return res.sendStatus(403);
+  if(!req.headers['Authorization']) return res.sendStatus(403);
 
   const Auth = await security.authorisation(req);
 
@@ -223,7 +223,7 @@ router.post('/skill', async function (req, res, next) {
 router.post('/barberSkill', async function (req, res, next) {
 
 
-  if(!req.headers['authorisation']) return res.sendStatus(403);
+  if(!req.headers['Authorization']) return res.sendStatus(403);
 
   const Auth = await security.authorisation(req);
 
@@ -241,7 +241,7 @@ router.post('/barberSkill', async function (req, res, next) {
 
 router.post('/availability', async function (req, res, next) {
 
-  if(!req.headers['authorisation']) return res.sendStatus(403);
+  if(!req.headers['Authorization']) return res.sendStatus(403);
 
   const Auth = await security.authorisation(req);
 
@@ -259,7 +259,7 @@ router.post('/availability', async function (req, res, next) {
 
 router.post('/appointment', async function (req, res, next) {
 
-  if(!req.headers['authorisation']) return res.sendStatus(403);
+  if(!req.headers['Authorization']) return res.sendStatus(403);
 
   const Auth = await security.authorisation(req);
 
@@ -301,7 +301,7 @@ router.get('/organisation', async function (req, res, next) {
 
 router.post('/appointment/delete', async function (req, res, next) {
 
-  if(!req.headers['authorisation']) return res.sendStatus(403);
+  if(!req.headers['Authorization']) return res.sendStatus(403);
 
   const Auth = await security.authorisation(req);
 
@@ -319,7 +319,7 @@ router.post('/appointment/delete', async function (req, res, next) {
 
 router.delete('/appointment', async function (req, res, next) {
 
-  if(!req.headers['authorisation']) return res.sendStatus(403);
+  if(!req.headers['Authorization']) return res.sendStatus(403);
 
   const Auth = await security.authorisation(req);
 
