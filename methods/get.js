@@ -91,11 +91,10 @@ async function company(req, res) {
           }}],function (err, organisation) {
 
                     if (err) {
-                        console.log(err);
-                        return res.send({ message: 'cant get og' }).status(403);
+                        return res.status(403).json({ message: 'cant get og' });
                     }
                     else {
-                        console.log(organisation);
+
                         return  res.status(200).json({organisation});
                     }
                 })     
@@ -106,7 +105,7 @@ async function Barbers(req, res) {
 
         console.log(req.query.organisationId);
         if (err) {
-            return res.send({ message: 'cant add barber skill' }).status(403);
+            return res.status(403).json({ message: 'cant add barber skill' });
         }
         else {
             console.log(stylists);
@@ -120,7 +119,7 @@ async function skilledBarbers(req, res) {
 
     BarberSkill.find({ skillId: req.query.skillId }, function (err, barberSkills) {
         if (err) {
-            return res.send({ message: 'cant get barber skill' }).status(403);
+             return res.status(403).json({ message: 'cant get barber skill' });
         }
 
         var barberIds = []
@@ -148,7 +147,7 @@ async function timeSlots(req, res) {
     BarberAvailability.find({ barberId: req.query.barberId, isAvailable: true }, function (err, availability) {
 
         if (err) {
-            return res.send({ message: 'time slot error' }).status(403);
+            return res.status(403).json({ message: 'time slot error' });
         }
         else {
             return  res.status(200).json({availability});
@@ -161,7 +160,7 @@ async function HoursOfWork(req, res) {
     workHours.find({ barberId: req.query.barberId, date: Moment(req.query.date) }, function (err, time) {
 
         if (err) {
-            return res.send({ message: 'Hours of work error' }).status(403);
+            return  res.status(403).json({ message: 'Hours of work error' });
         }
         else {
             return  res.status(200).json({time});
@@ -175,7 +174,7 @@ async function appointments(req, res) {
     CustomerAppointment.find({ barberId: req.query.barberId, date: Moment(req.query.date) }, function (err, bookings) {
 
         if (err) {
-            return res.send({ message: 'appointments of work error' }).status(403);
+            return res.status(403).json({ message: 'appointments of work error' });
         }
         else {
             return  res.status(200).json({bookings});
@@ -190,7 +189,7 @@ async function skills(req, res) {
     Skill.find({organisationId:req.query.organisationId}, function (err, skills) {
 
         if (err) {
-            return res.send({ message: 'cannot get skills' }).status(403);
+            return  res.status(403).json({ message: 'cannot get skills' });
         }
         else {
             return  res.status(200).json({skills});;
@@ -202,7 +201,7 @@ async function skills(req, res) {
 async function barberSkills(req, res) {
     BarberSkill.find({ barberId: req.query.barberId }, function (err, barberSkills) {
         if (err) {
-            return res.send({ message: 'cant get barber skill' }).status(403);
+            return res.status(403).json({ message: 'cant get barber skill' });
         }
 
         var skillIds = []
@@ -215,7 +214,7 @@ async function barberSkills(req, res) {
 
         Skill.find({ _id: { $in: skillIds } }, function (err, skills) {
             if (err) {
-                return res.send({ message: 'cant add barber skill' }).status(403);
+                return res.status(403).json({message: 'cant add barber skill' });
             }
             else {
                 return  res.status(200).json({skills});

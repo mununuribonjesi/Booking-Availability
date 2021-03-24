@@ -19,14 +19,14 @@ async function appointment(req, res) {
         }, function (err, app) {
 
             if (err) {
-                return res.status(400).send({ error: 'unable to send delete appointment' });
+                return res.status(403).json({ error: 'unable to send delete appointment' });
             }
 
             if (!app) {
-                return res.status(400).send({ error: 'not appointment to delete' });
+                return res.status(403).json({ error: 'not appointment to delete' });
             }
 
-            return res.status(200).send({ message: 'appointment deleted' })
+            return res.status(200).json({ message: 'appointment deleted' })
 
         })
 
@@ -37,3 +37,6 @@ async function appointment(req, res) {
 module.exports = {
     appointment
 }
+
+
+

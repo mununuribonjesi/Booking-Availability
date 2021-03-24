@@ -34,21 +34,21 @@ async function deleteAppointment(req, res) {
     CustomerAppointment.findOne({ _id: req.body.id }, function (err, custApp) {
 
         if (!custApp) {
-            return res.send({ message: 'cant find this appointment' }).status(403);
+            return res.status(403).json({ message: 'cant find this appointment' });
         }
 
         BarberAvailability.findByIdAndUpdate(custApp.avalabilityId, { isAvailable: true }, function (err, barber) {
             if (err) {
-                return res.send({ message: 'cant update this appointment' }).status(403);
+                return res.status(403).json({ message: 'cant update this appointment' });
             }
         })
 
         CustomerAppointment.findByIdAndDelete(custApp._id, function (err) {
 
             if (err) {
-                return res.send({ message: 'cant update this appointment' }).status(403);
+                return res.status(403).json({ message: 'cant update this appointment' });
             }
-            return res.send({ message: 'appointment has been successfully removed' }).status(200);
+            return res.status(403).json({ message: 'appointment has been successfully removed' });
         })
     })
 }
@@ -66,11 +66,11 @@ async function registerOrganisation(req, res) {
 
     og.save(function (err, company) {
         if (err) {
-            return res.send({ message: 'Add Address failed' }).status(403);
+            return res.status(403).json({ message: 'Add Address failed' });
         }
         else {
 
-            return res.send({ message: company }).status(200);
+            return res.status(200).json({ message: company });
         }
     });
 }
@@ -101,10 +101,10 @@ async function createAppointment(req, res, payload) {
 
             customerAppointment.save(function (err, customerAppointment) {
                 if (err) {
-                    return res.send({ message: 'added appointment' }).status(403);
+                    return res.status(403).json({ message: 'added appointment' });
                 }
                 else {
-                    return res.send({ message: customerAppointment }).status(200);
+                    return res.status(200).json({ message: customerAppointment });
                 }
 
             });
@@ -120,7 +120,7 @@ async function HoursOfWork(req, res) {
 
         if (err) {
 
-            return res.send({ message: 'cant find the barber' }).status(403);
+            return res.status(403).json({ message: 'cant find the barber' });
         }
 
         var workHours = new WorkHours({
@@ -132,10 +132,10 @@ async function HoursOfWork(req, res) {
 
         workHours.save(function (err, customerAppointment) {
             if (err) {
-                return res.send({ message: 'could not add work hours' }).status(403);
+                return res.status(403).json({message: 'could not add work hours' });
             }
             else {
-                return res.send({ message: 'added barber work hours' }).status(200);
+                return res.status(200).json({message: 'added barber work hours' });
             }
         });
     })
@@ -154,10 +154,10 @@ async function BarberSkills(req, res) {
 
             barberSkill.save(function (err, barberSkill) {
                 if (err) {
-                    return res.send({ message: 'cant add barber skill' }).status(403);
+                    return res.status(403).json({message: 'cant add barber skill' });
                 }
                 else {
-                    return res.send({ message: barberSkill }).status(200);
+                    return res.status(200).json({message:barberSkill });
                 }
             })
     });
@@ -174,10 +174,10 @@ async function Skills(req, res) {
 
     skill.save(function (err, skill) {
         if (err) {
-            return res.send({ message: 'cant add skill' }).status(403);
+            return res.status(403).json({message: 'cant add skill' });
         }
         else {
-            return res.send({ message: skill }).status(200);
+            return res.status(200).json({message:skill });
         }
     })
 }
