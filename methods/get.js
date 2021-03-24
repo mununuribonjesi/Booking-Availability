@@ -32,8 +32,8 @@ async function customerAppointments(req, res) {
         })
     }
 
-    console.log(customerApp);
-    res.send({ customerApp }).status(200);
+
+    return  res.status(200).json({customerApp});
 }
 
 async function existingAppointment(req, res) {
@@ -55,18 +55,18 @@ async function existingAppointment(req, res) {
                     {
                         console.log('does not already exists')
                         console.log(err);
-                        res.status(500).send({ message: err });
+                        res.status(500).json({ message: err });
                     }
 
                     if(!cust)
                     {
 
-                        res.status(200).send({ message: cust });
+                        res.status(200).json({ message: cust });
                     }
-
+    
                     if(cust)
                     {
-                        res.status(500).send({message:'appointment exists'});
+                        res.status(500).json({message:'appointment exists'});
                     }
     
                 })
@@ -96,7 +96,7 @@ async function company(req, res) {
                     }
                     else {
                         console.log(organisation);
-                        return res.send({organisation:JSON.parse(bookings)}).status(200);
+                        return  res.status(200).json({organisation});
                     }
                 })     
     }
@@ -110,7 +110,7 @@ async function Barbers(req, res) {
         }
         else {
             console.log(stylists);
-            return res.send({ stylists }).status(200);
+            return  res.status(200).json({stylists});
         }
     })
 }
@@ -136,7 +136,7 @@ async function skilledBarbers(req, res) {
                 return res.send({ message: 'cant add barber skill' }).status(403);
             }
             else {
-                return res.send({ stylists }).status(200);
+                return  res.status(200).json({stylists});
             }
         })
     })
@@ -151,7 +151,7 @@ async function timeSlots(req, res) {
             return res.send({ message: 'time slot error' }).status(403);
         }
         else {
-            return res.send({ availability }).status(200);
+            return  res.status(200).json({availability});
         }
     })
 }
@@ -164,7 +164,7 @@ async function HoursOfWork(req, res) {
             return res.send({ message: 'Hours of work error' }).status(403);
         }
         else {
-            return res.send({ time }).status(200);
+            return  res.status(200).json({time});
         }
     })
 }
@@ -178,7 +178,7 @@ async function appointments(req, res) {
             return res.send({ message: 'appointments of work error' }).status(403);
         }
         else {
-            return res.send({ bookings:JSON.parse(bookings) }).status(200);
+            return  res.status(200).json({bookings});
         }
     })
 
@@ -193,7 +193,7 @@ async function skills(req, res) {
             return res.send({ message: 'cannot get skills' }).status(403);
         }
         else {
-            return res.send({ skills }).status(200);
+            return  res.status(200).json({skills});;
         }
     })
 }
@@ -218,7 +218,7 @@ async function barberSkills(req, res) {
                 return res.send({ message: 'cant add barber skill' }).status(403);
             }
             else {
-                return res.send({ skills }).status(200);
+                return  res.status(200).json({skills});
             }
         })
     })
