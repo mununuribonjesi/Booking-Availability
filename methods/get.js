@@ -96,7 +96,7 @@ async function company(req, res) {
                     }
                     else {
                         console.log(organisation);
-                        return res.send({organisation:JSON.stringify(bookings)}).status(200);
+                        return res.send({organisation:JSON.parse(bookings)}).status(200);
                     }
                 })     
     }
@@ -178,7 +178,7 @@ async function appointments(req, res) {
             return res.send({ message: 'appointments of work error' }).status(403);
         }
         else {
-            return res.send({ bookings:JSON.stringify(bookings) }).status(200);
+            return res.send({ bookings:JSON.parse(bookings) }).status(200);
         }
     })
 
