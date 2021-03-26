@@ -93,8 +93,6 @@ router.get('/workHours', async function (req, res, next) {
 
 router.get('/skilledBarbers', async function (req, res, next) {
 
-  if(!req.headers['Authorization']) return res.sendStatus(403);
-
   const Auth = await security.authorization(req);
 
   if(Auth.status==200)

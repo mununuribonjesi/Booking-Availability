@@ -132,7 +132,7 @@ async function skilledBarbers(req, res) {
 
         Stylist.find({ _id: { $in: barberIds } }, function (err, stylists) {
             if (err) {
-                return res.send({ message: 'cant add barber skill' }).status(403);
+                return res.status(403).json({ message: 'cant add barber skill' });
             }
             else {
                 return  res.status(200).json({stylists});
