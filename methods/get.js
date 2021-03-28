@@ -78,14 +78,14 @@ async function existingAppointment(req, res) {
 
 
 async function company(req, res) {
-    const { lat,long } = req.query
+    const { lat,long,radius } = req.query
     var METERS_PER_MILE = 1609.34
 
  organisation.aggregate(
         [{$geoNear: {
             near: { type: "Point", coordinates: [Number(lat),Number(long)] },
                     distanceField: "distance",
-                    maxDistance:METERS_PER_MILE*20,
+                    maxDistance:METERS_PER_MILE*Number(radius),
                     distanceMultiplier:1/METERS_PER_MILE,
                     spherical: true
           }}],function (err, organisation) {
